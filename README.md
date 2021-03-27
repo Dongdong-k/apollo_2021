@@ -4,6 +4,8 @@ Movie app built with React, Apollo and GraphQL
 
 # 1. 시작하기
 
+> {
+
 ## 1. 프로젝트 생성하기
 
 - `npx create-react-app apollo_2021`
@@ -39,3 +41,4 @@ Movie app built with React, Apollo and GraphQL
   - install : `yarn add apollo-boost @apollo/react-hooks graphql`
   - For React Hook & GraphQL
   - Graph QL(query or mutation 사용) 을 사용하기 좋은 방법
+    }
