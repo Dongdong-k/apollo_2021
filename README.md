@@ -128,9 +128,8 @@ export default client;
 # Movie App
 
 > ## 1. GET Movies Query
->
-> ### 필요 정보를 요청하는 Query를 javascript로 작성
 
+- 필요 정보를 요청하는 Query를 javascript로 작성
 - Javascript는 Graph QL 이해하지 못함 -> `import {gql} from "apollo-boost";`
 - 원하는 정보를 Query로 작성 & useQuery 활용하여 데이터 저장하기
 
@@ -172,3 +171,151 @@ export default client;
 
   </div>
   </details>
+
+> ## 2. GET Movie Query
+
+- Home
+
+  - graphQL로부터 데이터를 받고 id를 Movie로 할당 : `useQuery`, `data.movies.map`
+  - id 클릭시 url/id 로 연결된 주소로 이동 : `<Movie>`
+  - id 클릭하여 해당 url/id로 이동시 새로운 페이지 연결(Detail) : `<App> & <Router>`
+      <details>
+      <summary>Code</summary>
+      <div markdown="1">
+
+    ```javascript
+    import React from "react";
+    import { gql } from "apollo-boost";
+    import { useQuery } from "@apollo/client";
+    import styled from "styled-components";
+    import Movie from "../components/Movie";
+
+    // 필요한 데이터를 Query로 작성하기
+    const GET_MOVIES = gql`
+      {
+        movies {
+          id
+          title
+          medium_cover_image
+        }
+      }
+    `;
+
+    const Container = styled.div`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    `;
+    const Header = styled.header`
+      background-image: linear-gradient(-45deg, #d754ab, #fd723a);
+      height: 45vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    `;
+    const Title = styled.h1`
+      font-size: 60px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    `;
+    const Subtitle = styled.h3`
+      font-size: 35px;
+    `;
+    const Loading = styled.div`
+      font-size: 18px;
+      opacity: 0.5;
+      font-weight: 500;
+      margin-top: 10px;
+    `;
+
+    // useQuery를 활용하여 요청한 Query 데이터 저장
+    export default () => {
+      const { loading, data } = useQuery(GET_MOVIES);
+
+      return (
+        <Container>
+          <Header>
+            <Title>Apollo 2021</Title>
+            <Subtitle>I love GraphQL</Subtitle>
+          </Header>
+          {loading && <Loading>Loading...</Loading>}
+          {!loading &&
+            data.movies &&
+            data.movies.map((m) => <Movie key={m.id} id={m.id} />)}
+        </Container>
+      );
+    };
+    ```
+
+  </div>
+  </details>
+
+- Movie
+
+  - id와 연결되는 URL/id 설정 : `<Link>`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```javascript
+    import react from "react";
+    import { Link } from "react-router-dom";
+
+    // <a herf> </a> 사용시 react app 리셋되는 현상 발생 => link 사용
+
+    export default ({ id }) => (
+      <div>
+        <Link to={`/${id}`}>{id}</Link>
+      </div>
+    );
+    ```
+
+    </div>
+    </details>
+
+- Detail.js
+
+  - URL로부터 id 값 추출하기 : `useParams()`
+  - 특정 인자가 필요한 Query 작성하기 : `GET_MOVIE`
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
+
+    ```javascript
+    import React from "react";
+    import { useParams } from "react-router-dom";
+    import { useQuery } from "@apollo/client";
+    import { gql } from "apollo-boost";
+
+    const GET_MOVIE = gql`
+      query getMovie($id: Int!) {
+        movie(id: $id) {
+          id
+          title
+          medium_cover_image
+          description_intro
+        }
+      }
+    `;
+
+    export default () => {
+      const { id } = useParams();
+      const { loading, data } = useQuery(GET_MOVIE, {
+        variables: { id },
+      });
+      console.log(loading, data);
+      if (loading) {
+        return "Loading...";
+      }
+      if (data && data.movie) {
+        return data.movie.title;
+      }
+    };
+    ```
+
+    </div>
+    </details>
