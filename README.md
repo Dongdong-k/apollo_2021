@@ -174,7 +174,7 @@ export default client;
 
 > ## 2. GET Movie Query
 
-- Home
+- Home.js
 
   - graphQL로부터 데이터를 받고 id를 Movie로 할당 : `useQuery`, `data.movies.map`
   - id 클릭시 url/id 로 연결된 주소로 이동 : `<Movie>`
@@ -254,7 +254,7 @@ export default client;
   </div>
   </details>
 
-- Movie
+- Movie.js
 
   - id와 연결되는 URL/id 설정 : `<Link>`
     <details>
@@ -280,42 +280,50 @@ export default client;
 - Detail.js
 
   - URL로부터 id 값 추출하기 : `useParams()`
-  - 특정 인자가 필요한 Query 작성하기 : `GET_MOVIE`
+  - 특정 인자가 필요한 Query 작성하기 : `GET_MOVIE`  
+     인자 - `$인자 : 타입`
     <details>
     <summary>Code</summary>
     <div markdown="1">
 
-    ```javascript
-    import React from "react";
-    import { useParams } from "react-router-dom";
-    import { useQuery } from "@apollo/client";
-    import { gql } from "apollo-boost";
+        ```javascript
+        import React from "react";
+        import { useParams } from "react-router-dom";
+        import { useQuery } from "@apollo/client";
+        import { gql } from "apollo-boost";
 
-    const GET_MOVIE = gql`
-      query getMovie($id: Int!) {
-        movie(id: $id) {
-          id
-          title
-          medium_cover_image
-          description_intro
-        }
-      }
-    `;
+        const GET_MOVIE = gql`
+          query getMovie($id: Int!) {
+            movie(id: $id) {
+              id
+              title
+              medium_cover_image
+              description_intro
+            }
+          }
+        `;
 
-    export default () => {
-      const { id } = useParams();
-      const { loading, data } = useQuery(GET_MOVIE, {
-        variables: { id },
-      });
-      console.log(loading, data);
-      if (loading) {
-        return "Loading...";
-      }
-      if (data && data.movie) {
-        return data.movie.title;
-      }
-    };
-    ```
+        export default () => {
+          const { id } = useParams();
+          const { loading, data } = useQuery(GET_MOVIE, {
+            variables: { id },
+          });
+          console.log(loading, data);
+          if (loading) {
+            return "Loading...";
+          }
+          if (data && data.movie) {
+            return data.movie.title;
+          }
+        };
+        ```
 
-    </div>
-    </details>
+          </div>
+          </details>
+
+> ## 3. Apollo Cache and Styles
+
+- Cache : 데이터 임시 저장 기능  
+  처음 데이터를 불러오는 경우에는 loading 필요하지만, 다시 동일한 내용을 불러오는 경우에는 loading 과정이 필요없음
+
+> ## 4. Home.js & Detail.js CSS

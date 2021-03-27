@@ -1,10 +1,27 @@
-import react from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-// <a herf> </a> 사용시 react app 리셋되는 현상 발생 => link 사용
+const Container = styled.div`
+  height: 380px;
+  width: 100%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  overflow: hidden;
+  border-radius: 7px;
+`;
 
-export default ({ id }) => (
-  <div>
-    <Link to={`/${id}`}>{id}</Link>
-  </div>
+const Poster = styled.div`
+  background-image: url(${(props) => props.bg});
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+`;
+
+export default ({ id, bg }) => (
+  <Container>
+    <Link to={`/${id}`}>
+      <Poster bg={bg} />
+    </Link>
+  </Container>
 );

@@ -1,15 +1,13 @@
 import React from "react";
 import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 import Movie from "../components/Movie";
 
-// 필요한 데이터를 Query로 작성하기
 const GET_MOVIES = gql`
   {
     movies {
       id
-      title
       medium_cover_image
     }
   }
@@ -21,6 +19,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
 `;
+
 const Header = styled.header`
   background-image: linear-gradient(-45deg, #d754ab, #fd723a);
   height: 45vh;
@@ -31,14 +30,17 @@ const Header = styled.header`
   align-items: center;
   width: 100%;
 `;
+
 const Title = styled.h1`
   font-size: 60px;
   font-weight: 600;
   margin-bottom: 20px;
 `;
+
 const Subtitle = styled.h3`
   font-size: 35px;
 `;
+
 const Loading = styled.div`
   font-size: 18px;
   opacity: 0.5;
@@ -46,20 +48,31 @@ const Loading = styled.div`
   margin-top: 10px;
 `;
 
-// useQuery를 활용하여 요청한 Query 데이터 저장
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+  width: 60%;
+  position: relative;
+  top: -50px;
+`;
+
 export default () => {
   const { loading, data } = useQuery(GET_MOVIES);
-
   return (
     <Container>
       <Header>
-        <Title>Apollo 2021</Title>
+        <Title>Apollo 2020</Title>
         <Subtitle>I love GraphQL</Subtitle>
       </Header>
       {loading && <Loading>Loading...</Loading>}
-      {!loading &&
-        data.movies &&
-        data.movies.map((m) => <Movie key={m.id} id={m.id} />)}
+      {!loading && data.movies && (
+        <Movies>
+          {data.movies.map((m) => (
+            <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />
+          ))}
+        </Movies>
+      )}
     </Container>
   );
 };
