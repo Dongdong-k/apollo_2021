@@ -25,6 +25,8 @@ Movie app built with React, Apollo and GraphQL
 
 ## Git repository 설정하기
 
+- `git remote add origin https://github.com/Dongdong-k/apollo_2021.git`
+
 ## 여기서 사용할 것들
 
 - Styled components
@@ -35,5 +37,5 @@ Movie app built with React, Apollo and GraphQL
   - For router
 - apollo
   - install : `yarn add apollo-boost @apollo/react-hooks graphql`
-  - For GraphQL
+  - For React Hook & GraphQL
   - Graph QL(query or mutation 사용) 을 사용하기 좋은 방법
