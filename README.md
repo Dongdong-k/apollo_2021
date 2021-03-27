@@ -53,22 +53,21 @@ Movie app built with React, Apollo and GraphQL
 - routes 폴더 내 Detail.js 생성 : `touch src/routes/Detail.js`  
   `export default ()=> "Detail"`
 - App.js Router 설정  
-  기능 : 주소에 따라 출력하는 홈페이지 다르게 설정
+   기능 : 주소에 따라 출력하는 홈페이지 다르게 설정
 
-```
-import React from "react";
-import { HashRouter as Router, Route } from "react-router-dom";
-import Detail from "../routes/Detail";
-import Home from "../routes/Home";
+  ```
+  import React from "react";
+  import { HashRouter as Router, Route } from "react-router-dom";
+  import Detail from "../routes/Detail";
+  import Home from "../routes/Home";
 
-function App() {
-  return (
-    <Router>
-      <Route exact path="/" component={Home} />
-      <Route path="/:id" component={Detail} />
-    </Router>
-  );
-}
-
-export default App;
-```
+  function App() {
+    return (
+            <Router>
+                <Route exact path="/" component={Home} />
+                <Route path="/:id" component={Detail} />
+            </Router>
+            );
+    }
+    export default App;
+  ```

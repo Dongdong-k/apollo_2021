@@ -1,5 +1,3 @@
 import React from "react";
 
-export default () => {
-  <button>Home</button>;
-};
+export default () => <button>Home</button>;
