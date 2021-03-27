@@ -45,7 +45,7 @@ Movie app built with React, Apollo and GraphQL
 
 - public 폴더 하위에 Reset.css 생성하기
 
-# Router and Styles
+# 2. Router and Styles
 
 - routes 폴더 생성하기 : `mkdir src/routes`
 - routes 폴더 내 Home.js 생성 : `touch src/routes/Home.js`  
@@ -54,8 +54,11 @@ Movie app built with React, Apollo and GraphQL
   `export default ()=> "Detail"`
 - App.js Router 설정  
    기능 : 주소에 따라 출력하는 홈페이지 다르게 설정
+    <details>
+    <summary>Code</summary>
+    <div markdown="1">
 
-  ```
+  ```javascript
   import React from "react";
   import { HashRouter as Router, Route } from "react-router-dom";
   import Detail from "../routes/Detail";
@@ -63,11 +66,60 @@ Movie app built with React, Apollo and GraphQL
 
   function App() {
     return (
-            <Router>
-                <Route exact path="/" component={Home} />
-                <Route path="/:id" component={Detail} />
-            </Router>
-            );
-    }
-    export default App;
+      <Router>
+        <Route exact path="/" component={Home} />
+        <Route path="/:id" component={Detail} />
+      </Router>
+    );
+  }
+  export default App;
   ```
+
+  </div>
+  </details>
+
+# 3. Apollo Clinet
+
+GraphQL 은 단순히 데이터베이스를 제공하는 언어이고 여기로부터 요청하여 데이터를 가져오고 정리하는 역할을 별도로 구성이 필요함.
+이 역할을 해주는 것이 Apollo 임.
+REST API 는 JSON 형식으로 정보 제공
+Graph QL 에서는 Query를 Axios fetch, POST request 보내 원하는 정보를 받음
+데이터가 필요할 때마다 위 내용을 반복해야 하는데, 이를 apollo가 대신해줌.
+
+<details>
+  <summary>Code : index.js</summary>
+  <div markdown="1">
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import { ApolloProvider } from "@apollo/react-hooks";
+import client from "./apollo";
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById("root")
+);
+```
+
+  </div>
+</details>
+<details>
+  <summary>Code : apollo.js</summary>
+  <div markdown="1">
+
+```javascript
+import ApolloClient from "apollo-boost";
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000/",
+});
+
+export default client;
+```
+
+  </div>
+</details>
