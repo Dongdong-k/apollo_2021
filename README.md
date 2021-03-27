@@ -80,13 +80,13 @@ Movie app built with React, Apollo and GraphQL
 
 # 3. Apollo Clinet
 
-GraphQL 은 단순히 데이터베이스를 제공하는 언어이고 여기로부터 요청하여 데이터를 가져오고 정리하는 역할을 별도로 구성이 필요함.
-이 역할을 해주는 것이 Apollo 임.
-REST API 는 JSON 형식으로 정보 제공
-Graph QL 에서는 Query를 Axios fetch, POST request 보내 원하는 정보를 받음
+GraphQL 은 단순히 데이터베이스를 제공하는 언어이고 여기로부터 요청하여 데이터를 가져오고 정리하는 역할을 별도로 구성이 필요함.  
+이 역할을 해주는 것이 Apollo 임.  
+REST API 는 JSON 형식으로 정보 제공  
+Graph QL 에서는 Query를 Axios fetch, POST request 보내 원하는 정보를 받음  
 데이터가 필요할 때마다 위 내용을 반복해야 하는데, 이를 apollo가 대신해줌.
 
-<details>
+  <details>
   <summary>Code : index.js</summary>
   <div markdown="1">
 
@@ -106,8 +106,9 @@ ReactDOM.render(
 ```
 
   </div>
-</details>
-<details>
+  </details>
+
+  <details>
   <summary>Code : apollo.js</summary>
   <div markdown="1">
 
@@ -122,4 +123,52 @@ export default client;
 ```
 
   </div>
-</details>
+  </details>
+
+# Movie App
+
+## GET Movies Query
+
+### 1. 필요 정보를 요청하는 Query를 javascript로 작성
+
+- Javascript는 Graph QL 이해하지 못함 -> `import {gql} from "apollo-boost";`
+- 원하는 정보를 Query로 작성 & useQuery 활용하여 데이터 저장하기
+
+  <details>
+  <summary>Code : Home.js</summary>
+  <div markdown="1">
+
+  ```javascript
+  import React from "react";
+  import { gql } from "apollo-boost";
+  import { useQuery } from "@apollo/client";
+
+  // 필요한 데이터를 Query로 작성하기
+  const GET_MOVIES = gql`
+    {
+      movies {
+        id
+        title
+        medium_cover_image
+      }
+    }
+  `;
+
+  // useQuery를 활용하여 요청한 Query 데이터 저장
+  export default () => {
+    const { loading, error, data } = useQuery(GET_MOVIES);
+    if (loading) {
+      return "Loading...";
+    }
+    if (error) {
+      return "error...";
+    }
+    if (data && data.movies) {
+      console.log(data);
+      return data.movies.map((data) => <h1>{data.title}</h1>);
+    }
+  };
+  ```
+
+  </div>
+  </details>
