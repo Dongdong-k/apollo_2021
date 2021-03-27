@@ -4,11 +4,11 @@ Movie app built with React, Apollo and GraphQL
 
 # 1. 시작하기
 
-## 1. 프로젝트 생성하기
+> ## 1. 프로젝트 생성하기
 
 - `npx create-react-app apollo_2021`
 
-## 2. 파일 정리하기
+> ## 2. 파일 정리하기
 
 - Delete
   - App.css
@@ -19,15 +19,15 @@ Movie app built with React, Apollo and GraphQL
   - setupTests.js
 - src 폴더 하위에 components 폴더 생성 & App.js 이동
 
-## 3. title 변경하기
+> ## 3. title 변경하기
 
 - index.html - tilte 수정
 
-## 4. Git repository 설정하기
+> ## 4. Git repository 설정하기
 
 - `git remote add origin https://github.com/Dongdong-k/apollo_2021.git`
 
-## 5. 여기서 사용할 것들
+> ## 5. 여기서 사용할 것들
 
 - Styled components
   - install : `yarn add styled-components`
@@ -41,7 +41,7 @@ Movie app built with React, Apollo and GraphQL
   - For React Hook & GraphQL
   - Graph QL(query or mutation 사용) 을 사용하기 좋은 방법
 
-## 6. reset Css
+> ## 6. reset Css
 
 - public 폴더 하위에 Reset.css 생성하기
 
@@ -127,9 +127,9 @@ export default client;
 
 # Movie App
 
-## GET Movies Query
-
-### 1. 필요 정보를 요청하는 Query를 javascript로 작성
+> ## 1. GET Movies Query
+>
+> ### 필요 정보를 요청하는 Query를 javascript로 작성
 
 - Javascript는 Graph QL 이해하지 못함 -> `import {gql} from "apollo-boost";`
 - 원하는 정보를 Query로 작성 & useQuery 활용하여 데이터 저장하기
